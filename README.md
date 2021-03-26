@@ -4,7 +4,7 @@ Custom variable for Google Tag Manager Web container that generated a unique ID 
 It can be used to set up event deduplication for Facebook conversion API.
 
 
-### How it works
+## How it works
 
 Variable is generated based on the data in the DataLayer: event, start, and uniqueEventId:
 
