@@ -16,7 +16,7 @@ Event ID: '1616318632825_3_click'
 
 ## How to set it up
 
-The instructions for setting up Facebook conversion API event deduplication using this variable are described in [this blog post](https://gtm-server.com/how-to-set-up-facebook-event-deduplication-in-google-tag-manager/).
+The instructions for setting up **Facebook conversion API event deduplication** using this variable are described in [this blog post](https://gtm-server.com/how-to-set-up-facebook-event-deduplication-in-google-tag-manager/).
 
 
 ## Open Source
