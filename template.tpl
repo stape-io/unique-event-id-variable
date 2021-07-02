@@ -15,7 +15,9 @@ ___INFO___
   "securityGroups": [],
   "displayName": "Unique Event ID",
   "description": "Generates unique event id",
-  "categories": ["UTILITY"],
+  "categories": [
+    "UTILITY"
+  ],
   "containerContexts": [
     "WEB"
   ]
@@ -108,3 +110,5 @@ scenarios: []
 ___NOTES___
 
 Created on 11/03/2021, 11:05:32
+
+
