@@ -31,35 +31,49 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const queryPermission = require('queryPermission');
 const copyFromDataLayer = require('copyFromDataLayer');
+const setInWindow = require('setInWindow');
+const copyFromWindow = require('copyFromWindow');
+const getTimestampMillis = require('getTimestampMillis');
+const generateRandom = require('generateRandom');
+
+return getGtmStart() + getPageLoadId() + '_' + getGtmUniqueEventId() + getEventName();
 
 
-const startKey = 'gtm.start';
-let startContents = '';
+function getGtmStart() {
+    let gtmStart = copyFromDataLayer('gtm.start');
 
-if (queryPermission('read_data_layer', startKey)) {
-  startContents = copyFromDataLayer(startKey);
+    if (gtmStart) {
+        return gtmStart + '_';
+    }
+
+    return '';
 }
 
-
-const uniqueEventIdKey = 'gtm.uniqueEventId';
-let uniqueEventIdContents = '';
-
-if (queryPermission('read_data_layer', uniqueEventIdKey)) {
-  uniqueEventIdContents = copyFromDataLayer(uniqueEventIdKey);
+function getGtmUniqueEventId() {
+    return copyFromDataLayer('gtm.uniqueEventId') || '0';
 }
 
+function getPageLoadId() {
+  let eventId = copyFromWindow('gtmPageLoadId');
 
-const eventKey = 'event';
-let eventContents = '';
+  if (!eventId) {
+    eventId = getTimestampMillis() + generateRandom(100000, 999999);
+    setInWindow('gtmPageLoadId', eventId, false);
+  }
 
-if (queryPermission('read_data_layer', eventKey)) {
-  eventContents = copyFromDataLayer(eventKey);
+  return eventId;
 }
 
+function getEventName() {
+    let eventName = copyFromDataLayer('event');
 
-return startContents+'_'+uniqueEventIdContents+'_'+eventContents;
+    if (eventName) {
+        return '_' + eventName;
+    }
+
+    return '';
+}
 
 
 ___WEB_PERMISSIONS___
@@ -88,6 +102,67 @@ ___WEB_PERMISSIONS___
               {
                 "type": 1,
                 "string": "event"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_globals",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keys",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "gtmPageLoadId"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
               }
             ]
           }
