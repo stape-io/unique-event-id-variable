@@ -1,5 +1,7 @@
 homepage: "https://stape.io/"
 versions:
+  - sha: da4ed6f53f03a6fcc5799b5b6aa13adfc5a001b4
+    changeNotes: Add random uniq per page ID.
   - sha: d3787d3dc9f97e6c2fc7f76421dffe85ad967d45
     changeNotes: Update for Stape.
   - sha: bfd8bf6c0afff85c8f67ab2a1bec57905ab7a7aa
