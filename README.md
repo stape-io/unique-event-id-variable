@@ -6,12 +6,11 @@ It can be used to set up event deduplication for Facebook conversion API.
 
 ## How it works
 
-Variable is generated based on the data in the DataLayer: event, start, and uniqueEventId and additionally generates random unique per page id:
+Variable is generated based on the data in the DataLayer, current timestamp and random number:
 
 For example:
 ```
-Data Layer values after this Message: {gtm: {start: 1616318632825, uniqueEventId: 3}, event: 'click'}
-Event ID: '1643914708641_1643915208882_3_click'
+Event ID: '1646750371301_16467595538826'
 ```
 
 ## How to set it up

@@ -3,22 +3,23 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const getTimestampMillis = require('getTimestampMillis');
 const generateRandom = require('generateRandom');
+const localStorage = require('localStorage');
 
-return getGtmStart() + getPageLoadId() + '_' + getGtmUniqueEventId() + getEventName();
-
-
-function getGtmStart() {
-    let gtmStart = copyFromDataLayer('gtm.start');
-
-    if (gtmStart) {
-        return gtmStart + '_';
-    }
-
-    return '';
-}
+return getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();
 
 function getGtmUniqueEventId() {
     return copyFromDataLayer('gtm.uniqueEventId') || '0';
+}
+
+function getBrowserId() {
+    let gtmBrowserId = localStorage.getItem('gtmBrowserId');
+
+    if (!gtmBrowserId) {
+        gtmBrowserId = getTimestampMillis() + generateRandom(100000, 999999);
+        localStorage.setItem('gtmBrowserId', gtmBrowserId);
+    }
+
+    return gtmBrowserId;
 }
 
 function getPageLoadId() {
@@ -30,14 +31,4 @@ function getPageLoadId() {
   }
 
   return eventId;
-}
-
-function getEventName() {
-    let eventName = copyFromDataLayer('event');
-
-    if (eventName) {
-        return '_' + eventName;
-    }
-
-    return '';
 }
