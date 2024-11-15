@@ -3,20 +3,21 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const getTimestampMillis = require('getTimestampMillis');
 const generateRandom = require('generateRandom');
-const localStorage = require('localStorage');
+
 
 return getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();
 
 function getGtmUniqueEventId() {
-    return copyFromDataLayer('gtm.uniqueEventId') || '0';
+    let gtmId = copyFromDataLayer('gtm.uniqueEventId')  || 0;
+    return gtmId >= 0 ? gtmId : '00';
 }
 
 function getBrowserId() {
-    let gtmBrowserId = localStorage.getItem('gtmBrowserId');
+    let gtmBrowserId =  copyFromWindow('gtmBrowserId');
 
     if (!gtmBrowserId) {
         gtmBrowserId = getTimestampMillis() + generateRandom(100000, 999999);
-        localStorage.setItem('gtmBrowserId', gtmBrowserId);
+        setInWindow('gtmBrowserId', gtmBrowserId, false);
     }
 
     return gtmBrowserId;

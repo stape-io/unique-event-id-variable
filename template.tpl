@@ -36,20 +36,21 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const getTimestampMillis = require('getTimestampMillis');
 const generateRandom = require('generateRandom');
-const localStorage = require('localStorage');
+
 
 return getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();
 
 function getGtmUniqueEventId() {
-    return copyFromDataLayer('gtm.uniqueEventId') || '0';
+    let gtmId = copyFromDataLayer('gtm.uniqueEventId')  || 0;
+    return gtmId >= 0 ? gtmId : '00';
 }
 
 function getBrowserId() {
-    let gtmBrowserId = localStorage.getItem('gtmBrowserId');
+    let gtmBrowserId =  copyFromWindow('gtmBrowserId');
 
     if (!gtmBrowserId) {
         gtmBrowserId = getTimestampMillis() + generateRandom(100000, 999999);
-        localStorage.setItem('gtmBrowserId', gtmBrowserId);
+        setInWindow('gtmBrowserId', gtmBrowserId, false);
     }
 
     return gtmBrowserId;
@@ -77,6 +78,13 @@ ___WEB_PERMISSIONS___
         "versionId": "1"
       },
       "param": [
+        {
+          "key": "allowedKeys",
+          "value": {
+            "type": 1,
+            "string": "specific"
+          }
+        },
         {
           "key": "keyPatterns",
           "value": {
@@ -146,29 +154,7 @@ ___WEB_PERMISSIONS___
                     "boolean": false
                   }
                 ]
-              }
-            ]
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
-  {
-    "instance": {
-      "key": {
-        "publicId": "access_local_storage",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "keys",
-          "value": {
-            "type": 2,
-            "listItem": [
+              },
               {
                 "type": 3,
                 "mapKey": [
@@ -183,6 +169,10 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
                   }
                 ],
                 "mapValue": [
@@ -197,6 +187,10 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 8,
                     "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
                   }
                 ]
               }
