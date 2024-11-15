@@ -41,7 +41,8 @@ const generateRandom = require('generateRandom');
 return getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();
 
 function getGtmUniqueEventId() {
-    return copyFromDataLayer('gtm.uniqueEventId') || '0';
+    let gtmId = copyFromDataLayer('gtm.uniqueEventId')  || 0;
+    return gtmId >= 0 ? gtmId : '00';
 }
 
 function getBrowserId() {
