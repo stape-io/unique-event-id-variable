@@ -1,5 +1,7 @@
 homepage: "https://stape.io/"
 versions:
+  - sha: 76498f16f1954b0286640d19eb6a1ddf2909e183
+    changeNotes: Moved BrowserId from localStorage to global variable, fixed negative gtm event ID.
   - sha: df7bc964739af2ec09a49bb48df1c20ef6ef37c2
     changeNotes: Update format to support TikTok event type.
   - sha: da4ed6f53f03a6fcc5799b5b6aa13adfc5a001b4
