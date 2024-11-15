@@ -3,7 +3,7 @@ const setInWindow = require('setInWindow');
 const copyFromWindow = require('copyFromWindow');
 const getTimestampMillis = require('getTimestampMillis');
 const generateRandom = require('generateRandom');
-const localStorage = require('localStorage');
+
 
 return getBrowserId() + '_' + getPageLoadId() + getGtmUniqueEventId();
 
@@ -12,11 +12,11 @@ function getGtmUniqueEventId() {
 }
 
 function getBrowserId() {
-    let gtmBrowserId = localStorage.getItem('gtmBrowserId');
+    let gtmBrowserId =  copyFromWindow('gtmBrowserId');
 
     if (!gtmBrowserId) {
         gtmBrowserId = getTimestampMillis() + generateRandom(100000, 999999);
-        localStorage.setItem('gtmBrowserId', gtmBrowserId);
+        setInWindow('gtmBrowserId', gtmBrowserId, false);
     }
 
     return gtmBrowserId;
